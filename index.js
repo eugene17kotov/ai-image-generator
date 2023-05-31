@@ -1,10 +1,13 @@
 import express from 'express';
-import config from 'config';
+import dotenv from 'dotenv';
 import { engine } from 'express-handlebars';
 import { Configuration, OpenAIApi } from 'openai';
 
+dotenv.config();
+const OPENAI_KEY = process.env.OPENAI_KEY;
+
 const configuration = new Configuration({
-    apiKey: config.get('OPENAI_KEY'),
+    apiKey: OPENAI_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
@@ -21,27 +24,25 @@ app.get('/', (_, res) => {
 
 app.post('/', async (req, res) => {
     const { prompt, size = '512x512', number = 1 } = req.body;
-    // const prompt = req.body.prompt;
-    // const size = req.body.size ?? '512x512';
-    // const number = req.body.number ?? 1;
 
     try {
         const response = await openai.createImage({
             prompt,
             size,
             n: Number(number),
-            // response_format: 'url',
         });
 
-        console.log(response.data.data);
         res.render('index', {
             images: response.data.data,
         });
     } catch (error) {
-        res.render('index', { error: error.message });
-    }
+        console.error(error.response.status);
+        console.error(error.response?.data?.error?.message);
 
-    console.log(prompt, size, number);
+        res.render('index', {
+            error: error,
+        });
+    }
 });
 
 app.listen(3000, () => console.log('Server started...'));

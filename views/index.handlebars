@@ -30,3 +30,13 @@
         {{/each}}
     </div>
 {{/if}}
+
+{{#if error}}
+        <div class="alert alert-danger mt-4" role="alert">
+            <h4 class="alert-heading mb-2">Error!</h4>
+                <p>Your request was rejected as a result of our safety system.</p>
+                <p class="mb-1">Your prompt may contain text that is not allowed by our safety system.</p>
+                <hr>
+                <p class="mb-0">Please, use another request text.</p>
+        </div>
+{{/if}}
