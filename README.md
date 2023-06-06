@@ -1,7 +1,6 @@
-# Image Generator with OpenAI
+# 🧠OpenAI Image Generator🖼️
 
-Let your imagination fly and my application renders it on the screen.
-
+  - image generator based on OpenAI power 🖥️, implemented with Node.js and a template engine Handlebars.js〰️. Let your imagination fly and my application renders it on the screen.
 
 ## Run Locally
 
